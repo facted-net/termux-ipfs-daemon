@@ -12,6 +12,6 @@ From the termux command line:
 `curl https://raw.githubusercontent.com/facted-net/termux-ipfs-daemon/master/termux-ipfs -o ~/termux-ipfs; chmod ogu+x termux-ipfs`
 
 ## Usage
-From the termux command line:
+From the Termux command line:
 
 `./termux-ipfs`

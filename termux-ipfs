@@ -15,7 +15,7 @@ fi
 
 # Initialize IPFS if necessary
 if [ ! $(~/ipfs config show > /dev/null) ]; then
-    ipfs init
+    ~/ipfs init
 fi
 
 # Install other prerequisites

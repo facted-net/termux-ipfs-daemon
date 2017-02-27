@@ -47,10 +47,10 @@ do
         # If not wifi, run offline
         if [ "$WIFI_LINK" == "0" ]; then
             echo "wifi unavailable, going offline."
-            ~/ipfs daemon --offline &
+            ~/ipfs daemon --offline > ipfs.log &
         else
             echo "wifi available, going online."
-            ~/ipfs daemon &
+            ~/ipfs daemon > ipfs.log &
         fi
     fi
 

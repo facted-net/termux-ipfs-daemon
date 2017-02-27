@@ -37,11 +37,14 @@ do
         if [ ! "$PREV_WIFI_LINK" == "" ]; then
             killall ipfs
             sleep 10
+            echo -n "Network change detected: "
         fi
         # If not wifi, run offline
         if [ "$WIFI_LINK" == "0" ]; then
+            echo "wifi unavailable, switching to offline mode."
             ~/ipfs daemon --offline &
         else
+            echo "wifi available, switching to online mode."
             ~/ipfs daemon &
         fi
     fi

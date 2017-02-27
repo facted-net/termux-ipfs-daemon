@@ -1,7 +1,14 @@
-#!/bin/bash
+#!/data/data/com.termux/files/usr/bin/bash
 if [ ! -f ~/ipfs ]; then
     echo "Downloading ipfs binary..."
-    curl https://ipfs.io/ipfs/QmRMHb4Vhv8LtYqw8RkDgkdZYxJHfrfFeQaHbNUqJYmdF2 -# -o ~/ipfs
+    if [ "aarch64" = "$(uname -m)" ]; then
+        BINARY="QmRMHb4Vhv8LtYqw8RkDgkdZYxJHfrfFeQaHbNUqJYmdF2"
+    else
+        BINARY="QmZp3wZU4MsU53P8isK5rVCcEdiSig2xdSzxJSEBgAw3Kg"
+    fi
+
+    curl https://ipfs.io/ipfs/$BINARY -# -o ~/ipfs
+    chmod ogu+x ~/ipfs
 fi
 
 ~/ipfs daemon &

@@ -1,4 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
+
+# Install IPFS
 if [ ! -f ~/ipfs ]; then
     echo "Downloading ipfs binary..."
     if [ "aarch64" = "$(uname -m)" ]; then
@@ -11,4 +13,37 @@ if [ ! -f ~/ipfs ]; then
     chmod ogu+x ~/ipfs
 fi
 
-~/ipfs daemon &
+# Install other prerequisites
+if [ ! $(which jq) ]; then
+    apt install jq
+fi
+
+while :
+do
+    # Get wifi connection
+    if [ ! "$(termux-wifi-connectioninfo | jq .link_speed_mbps)" == "-1" ]; then
+        WIFI_LINK=1
+    else
+        WIFI_LINK=0
+    fi
+
+    # If any change in the connection
+    if [ ! "$WIFI_LINK" == "$PREV_WIFI_LINK" ]; then
+        # If there is any previous daemon, kill it
+        if [ ! "$PREV_WIFI_LINK" == "" ]; then
+            killall ipfs
+            sleep 10
+        fi
+        # If not wifi, run offline
+        if [ "$WIFI_LINK" == "0" ]; then
+            ~/ipfs daemon --offline &
+        else
+            ~/ipfs daemon &
+        fi
+    fi
+
+    PREV_WIFI_LINK="$WIFI_LINK"
+
+    # Polling interval 15 sec
+    sleep 15
+done

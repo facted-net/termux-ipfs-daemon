@@ -14,7 +14,7 @@ if [ ! -f ~/ipfs ]; then
 fi
 
 # Initialize IPFS if necessary
-if [ ! $(~/ipfs config show > /dev/null) ]; then
+if [ ! -d ~/.ipfs ]; then
     ~/ipfs init
 fi
 
@@ -46,10 +46,10 @@ do
         fi
         # If not wifi, run offline
         if [ "$WIFI_LINK" == "0" ]; then
-            echo "wifi unavailable, switching to offline mode."
+            echo "wifi unavailable, going offline."
             ~/ipfs daemon --offline &
         else
-            echo "wifi available, switching to online mode."
+            echo "wifi available, going online."
             ~/ipfs daemon &
         fi
     fi
